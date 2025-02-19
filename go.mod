@@ -2,7 +2,7 @@ module github.com/YuanJey/qyapi
 
 go 1.24.0
 
-require github.com/YuanJey/goutils2 v1.0.4
+require github.com/YuanJey/goutils2 v1.0.5
 
 require (
 	github.com/gogo/protobuf v1.3.2 // indirect
