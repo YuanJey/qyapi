@@ -1,4 +1,4 @@
-module github.com/YuanJey/qywechatapi
+module github.com/YuanJey/qyapi
 
 go 1.24.0
 
@@ -9,5 +9,5 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 )

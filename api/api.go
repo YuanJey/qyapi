@@ -2,8 +2,8 @@ package api
 
 import (
 	"fmt"
-	"github.com/YuanJey/qywechatapi/http_client"
-	"github.com/YuanJey/qywechatapi/resp"
+	"github.com/YuanJey/qyapi/http_client"
+	"github.com/YuanJey/qyapi/resp"
 )
 
 const (
