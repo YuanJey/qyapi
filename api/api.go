@@ -40,7 +40,7 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 	getDepartmentListResp := resp.GetDepartmentListResp{}
 	url := fmt.Sprintf(getDepartmentList, q.AccessToken)
 	if did != "" {
-		url += "&id=%s"
+		url += fmt.Sprintf("&id=%s", did)
 	}
 	err := http_client.Get(url, nil, &getDepartmentListResp)
 	return &getDepartmentListResp, err
