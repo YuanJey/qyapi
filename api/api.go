@@ -11,6 +11,7 @@ const (
 	getAccessToken    = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s"
 	getDepartmentList = "https://qyapi.weixin.qq.com/cgi-bin/department/list?%s"
 	getUserList       = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?%s"
+	getUserInfo       = "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo?%s"
 )
 
 type QYApi struct {
@@ -56,4 +57,14 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 	values.Set("access_token", q.AccessToken)
 	err := http_client.Get(fmt.Sprintf(getUserList, values.Encode()), nil, &getUserListResp)
 	return &getUserListResp, err
+}
+
+// GetUserInfo 获取授权成员信息
+func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
+	getUserInfoResp := resp.GetUserInfoResp{}
+	values := url.Values{}
+	values.Set("access_token", q.AccessToken)
+	values.Set("code", code)
+	err := http_client.Get(fmt.Sprintf(getUserInfo, values.Encode()), nil, &getUserInfoResp)
+	return &getUserInfoResp, err
 }

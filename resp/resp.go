@@ -28,3 +28,9 @@ type GetUserListResp struct {
 		OpenUserid string `json:"open_userid"`
 	} `json:"userlist"`
 }
+type GetUserInfoResp struct {
+	Errcode    int    `json:"errcode"`
+	Errmsg     string `json:"errmsg"`
+	Userid     string `json:"userid"`
+	UserTicket string `json:"user_ticket"`
+}
