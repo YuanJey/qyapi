@@ -8,29 +8,31 @@ import (
 )
 
 const (
-	getAccessToken    = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s"
-	getDepartmentList = "https://qyapi.weixin.qq.com/cgi-bin/department/list?%s"
-	getUserList       = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?%s"
-	getUserInfo       = "https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo?%s"
+	getAccessToken    = "%s/cgi-bin/gettoken?corpid=%s&corpsecret=%s"
+	getDepartmentList = "%s/cgi-bin/department/list?%s"
+	getUserList       = "%s/cgi-bin/user/simplelist?%s"
+	getUserInfo       = "%s/cgi-bin/auth/getuserinfo?%s"
 )
 
 type QYApi struct {
 	CorpId      string
 	CorpSecret  string
+	Addr        string
 	AccessToken string
 }
 
 var QYWeChatApi *QYApi
 
-func InitQYApi(corpId, corpSecret string) {
+func InitQYApi(corpId, corpSecret, addr string) {
 	QYWeChatApi = &QYApi{
 		CorpId:     corpId,
 		CorpSecret: corpSecret,
+		Addr:       addr,
 	}
 }
 func (q *QYApi) ReSetAccessToken() error {
 	getAccessTokenResp := resp.GetAccessTokenResp{}
-	err := http_client.Get(fmt.Sprintf(getAccessToken, q.CorpId, q.CorpSecret), nil, &getAccessTokenResp)
+	err := http_client.Get(fmt.Sprintf(getAccessToken, q.Addr, q.CorpId, q.CorpSecret), nil, &getAccessTokenResp)
 	if getAccessTokenResp.AccessToken != "" {
 		q.AccessToken = getAccessTokenResp.AccessToken
 	}
@@ -45,7 +47,7 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 		values.Set("id", did)
 	}
 	values.Set("access_token", q.AccessToken)
-	err := http_client.Get(fmt.Sprintf(getDepartmentList, values.Encode()), nil, &getDepartmentListResp)
+	err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
 	return &getDepartmentListResp, err
 }
 
@@ -55,7 +57,7 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 	values := url.Values{}
 	values.Set("department_id", did)
 	values.Set("access_token", q.AccessToken)
-	err := http_client.Get(fmt.Sprintf(getUserList, values.Encode()), nil, &getUserListResp)
+	err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
 	return &getUserListResp, err
 }
 
@@ -65,6 +67,6 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 	values := url.Values{}
 	values.Set("access_token", q.AccessToken)
 	values.Set("code", code)
-	err := http_client.Get(fmt.Sprintf(getUserInfo, values.Encode()), nil, &getUserInfoResp)
+	err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
 	return &getUserInfoResp, err
 }
