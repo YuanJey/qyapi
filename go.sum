@@ -1,5 +1,9 @@
 github.com/YuanJey/goutils2 v1.0.5 h1:VSa0/nPO26zWzZgf/YJ82XTvxDjudLGaY6qeVpgwhnA=
 github.com/YuanJey/goutils2 v1.0.5/go.mod h1:CFV02ewbCuFfYi+VljDuRBku8NOC2Wvrfy4DTkSRKH4=
+github.com/YuanJey/goutils2 v1.0.6 h1:bSBGgqFRuDIniYW1+MKkeOYKOOQHEbETkbgVqeuTGCY=
+github.com/YuanJey/goutils2 v1.0.6/go.mod h1:Rn6zJOH18iZrfXLgzroatrj6Vg1AjKpdx36+kpRUi2s=
+github.com/avast/retry-go/v4 v4.6.0 h1:K9xNA+KeB8HHc2aWFuLb25Offp+0iVRXEvFx8IinRJA=
+github.com/avast/retry-go/v4 v4.6.0/go.mod h1:gvWlPhBVsvBbLkVGDg/KwvBv0bEkCOLRRSHKIr2PyOE=
 github.com/gogo/protobuf v1.3.2 h1:Ov1cvc58UF3b5XjBnZv7+opcTcQFZebYjWzi34vdm4Q=
 github.com/gogo/protobuf v1.3.2/go.mod h1:P1XiOD3dCwIKUDQYPy72D8LYyHL2YPYrpS2s69NZV8Q=
 github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=

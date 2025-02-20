@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/YuanJey/goutils2/pkg/utils"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -30,7 +30,7 @@ func Get(url string, req interface{}, resp interface{}) error {
 	if err != nil {
 		return err
 	}
-	result, err := ioutil.ReadAll(httpResponse.Body)
+	result, err := io.ReadAll(httpResponse.Body)
 	if httpResponse.StatusCode != 200 {
 		return utils.Wrap(errors.New(httpResponse.Status), "status code failed "+url+string(result))
 	}

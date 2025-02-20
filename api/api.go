@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/YuanJey/qyapi/http_client"
 	"github.com/YuanJey/qyapi/resp"
+	"github.com/avast/retry-go/v4"
 	"net/url"
 )
 
@@ -47,7 +48,17 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 		values.Set("id", did)
 	}
 	values.Set("access_token", q.AccessToken)
-	err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
+	err := retry.Do(func() error {
+		err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
+		if err != nil {
+			err1 := q.ReSetAccessToken()
+			if err1 != nil {
+				return err1
+			}
+			return err
+		}
+		return err
+	}, retry.Attempts(3))
 	return &getDepartmentListResp, err
 }
 
@@ -57,7 +68,18 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 	values := url.Values{}
 	values.Set("department_id", did)
 	values.Set("access_token", q.AccessToken)
-	err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
+	err := retry.Do(func() error {
+		err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
+		if err != nil {
+			err1 := q.ReSetAccessToken()
+			if err1 != nil {
+				return err1
+			}
+			return err
+		}
+		return err
+	}, retry.Attempts(3))
+	//err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
 	return &getUserListResp, err
 }
 
@@ -67,6 +89,17 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 	values := url.Values{}
 	values.Set("access_token", q.AccessToken)
 	values.Set("code", code)
-	err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
+	err := retry.Do(func() error {
+		err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
+		if err != nil {
+			err1 := q.ReSetAccessToken()
+			if err1 != nil {
+				return err1
+			}
+			return err
+		}
+		return err
+	}, retry.Attempts(3))
+	//err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
 	return &getUserInfoResp, err
 }
