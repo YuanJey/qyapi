@@ -50,7 +50,7 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 	values.Set("access_token", q.AccessToken)
 	err := retry.Do(func() error {
 		err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
-		if err != nil {
+		if err != nil || getDepartmentListResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
@@ -70,7 +70,7 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 	values.Set("access_token", q.AccessToken)
 	err := retry.Do(func() error {
 		err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
-		if err != nil {
+		if err != nil || getUserListResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
@@ -91,7 +91,7 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 	values.Set("code", code)
 	err := retry.Do(func() error {
 		err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
-		if err != nil {
+		if err != nil || getUserInfoResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
