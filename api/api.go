@@ -13,6 +13,7 @@ const (
 	getDepartmentList = "%s/cgi-bin/department/list?%s"
 	getUserList       = "%s/cgi-bin/user/simplelist?%s"
 	getUserInfo       = "%s/cgi-bin/auth/getuserinfo?%s"
+	getUserInfo2      = "%s/cgi-bin/user/getuserinfo?%s"
 )
 
 type QYApi struct {
@@ -91,6 +92,25 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 	values.Set("code", code)
 	err := retry.Do(func() error {
 		err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
+		if err != nil || getUserInfoResp.Errcode != 0 {
+			err1 := q.ReSetAccessToken()
+			if err1 != nil {
+				return err1
+			}
+			return err
+		}
+		return err
+	}, retry.Attempts(3))
+	//err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
+	return &getUserInfoResp, err
+}
+func (q *QYApi) GetUserInfo2(code string) (*resp.GetUserInfoResp, error) {
+	getUserInfoResp := resp.GetUserInfoResp{}
+	values := url.Values{}
+	values.Set("access_token", q.AccessToken)
+	values.Set("code", code)
+	err := retry.Do(func() error {
+		err := http_client.Get(fmt.Sprintf(getUserInfo2, q.Addr, values.Encode()), nil, &getUserInfoResp)
 		if err != nil || getUserInfoResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
