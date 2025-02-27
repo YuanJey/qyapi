@@ -44,12 +44,12 @@ func (q *QYApi) ReSetAccessToken() error {
 // GetDepartmentList 获取部门列表
 func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, error) {
 	getDepartmentListResp := resp.GetDepartmentListResp{}
-	values := url.Values{}
-	if did != "" {
-		values.Set("id", did)
-	}
-	values.Set("access_token", q.AccessToken)
 	err := retry.Do(func() error {
+		values := url.Values{}
+		if did != "" {
+			values.Set("id", did)
+		}
+		values.Set("access_token", q.AccessToken)
 		err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
 		if err != nil || getDepartmentListResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
@@ -66,10 +66,10 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 // GetUserList 获取部门成员
 func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 	getUserListResp := resp.GetUserListResp{}
-	values := url.Values{}
-	values.Set("department_id", did)
-	values.Set("access_token", q.AccessToken)
 	err := retry.Do(func() error {
+		values := url.Values{}
+		values.Set("department_id", did)
+		values.Set("access_token", q.AccessToken)
 		err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
 		if err != nil || getUserListResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
@@ -87,10 +87,10 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 // GetUserInfo 获取授权成员信息
 func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 	getUserInfoResp := resp.GetUserInfoResp{}
-	values := url.Values{}
-	values.Set("access_token", q.AccessToken)
-	values.Set("code", code)
 	err := retry.Do(func() error {
+		values := url.Values{}
+		values.Set("access_token", q.AccessToken)
+		values.Set("code", code)
 		err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
 		if err != nil || getUserInfoResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
@@ -106,10 +106,10 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 }
 func (q *QYApi) GetUserInfo2(code string) (*resp.GetUserInfoResp, error) {
 	getUserInfoResp := resp.GetUserInfoResp{}
-	values := url.Values{}
-	values.Set("access_token", q.AccessToken)
-	values.Set("code", code)
 	err := retry.Do(func() error {
+		values := url.Values{}
+		values.Set("access_token", q.AccessToken)
+		values.Set("code", code)
 		err := http_client.Get(fmt.Sprintf(getUserInfo2, q.Addr, values.Encode()), nil, &getUserInfoResp)
 		if err != nil || getUserInfoResp.Errcode != 0 {
 			err1 := q.ReSetAccessToken()
