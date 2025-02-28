@@ -1,6 +1,7 @@
 package api
 
 import (
+	"errors"
 	"fmt"
 	"github.com/YuanJey/qyapi/http_client"
 	"github.com/YuanJey/qyapi/resp"
@@ -52,6 +53,7 @@ func (q *QYApi) GetDepartmentList(did string) (*resp.GetDepartmentListResp, erro
 		values.Set("access_token", q.AccessToken)
 		err := http_client.Get(fmt.Sprintf(getDepartmentList, q.Addr, values.Encode()), nil, &getDepartmentListResp)
 		if err != nil || getDepartmentListResp.Errcode != 0 {
+			err = errors.New("code err")
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
@@ -72,6 +74,7 @@ func (q *QYApi) GetUserList(did string) (*resp.GetUserListResp, error) {
 		values.Set("access_token", q.AccessToken)
 		err := http_client.Get(fmt.Sprintf(getUserList, q.Addr, values.Encode()), nil, &getUserListResp)
 		if err != nil || getUserListResp.Errcode != 0 {
+			err = errors.New("code err")
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
@@ -93,6 +96,7 @@ func (q *QYApi) GetUserInfo(code string) (*resp.GetUserInfoResp, error) {
 		values.Set("code", code)
 		err := http_client.Get(fmt.Sprintf(getUserInfo, q.Addr, values.Encode()), nil, &getUserInfoResp)
 		if err != nil || getUserInfoResp.Errcode != 0 {
+			err = errors.New("code err")
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
@@ -112,6 +116,7 @@ func (q *QYApi) GetUserInfo2(code string) (*resp.GetUserInfoResp, error) {
 		values.Set("code", code)
 		err := http_client.Get(fmt.Sprintf(getUserInfo2, q.Addr, values.Encode()), nil, &getUserInfoResp)
 		if err != nil || getUserInfoResp.Errcode != 0 {
+			err = errors.New("code err")
 			err1 := q.ReSetAccessToken()
 			if err1 != nil {
 				return err1
