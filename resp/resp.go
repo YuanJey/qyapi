@@ -28,9 +28,16 @@ type GetUserListResp struct {
 		OpenUserid string `json:"open_userid"`
 	} `json:"userlist"`
 }
+
+//	type GetUserInfoResp struct {
+//		Errcode    int    `json:"errcode"`
+//		Errmsg     string `json:"errmsg"`
+//		Userid     string `json:"userid"`
+//		UserTicket string `json:"user_ticket"`
+//	}
 type GetUserInfoResp struct {
-	Errcode    int    `json:"errcode"`
-	Errmsg     string `json:"errmsg"`
-	Userid     string `json:"userid"`
-	UserTicket string `json:"user_ticket"`
+	UserId   string `json:"UserId"`
+	DeviceId string `json:"DeviceId"`
+	Errcode  int    `json:"errcode"`
+	ErrMsg   string `json:"errmsg"`
 }
